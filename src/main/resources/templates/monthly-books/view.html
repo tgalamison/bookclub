@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Details</title>
+    <!-- Bootstrap StyleSheet CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+</head>
+<body>
+<div th:insert="~{fragments/header :: header}"></div>
+
+<main class="container mt-5">
+    <!-- Bootstrap card to display book details -->
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title" th:text="${book.title}"></h5>
+            <p class="card-text" th:text="${book.description}"></p>
+            <p><strong>ISBN:</strong> <span th:text="${book.isbn}"></span></p>
+            <p><strong>Number of Pages:</strong> <span th:text="${book.numOfPages}"></span></p>
+            <p><strong>Authors:</strong></p>
+            <ul>
+                <li th:each="author : ${book.authors}" th:text="${author}"></li>
+            </ul>
+        </div>
+    </div>
+
+    <a href="/" class="btn btn-primary mt-3">Return to Home</a>
+</main>
+
+<div th:insert="~{fragments/footer :: footer}"></div>
+<div th:insert="~{fragments/scriptFooter :: scriptFooter}"></div>
+
+</body>
+</html>
