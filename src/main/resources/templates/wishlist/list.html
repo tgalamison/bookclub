@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Wishlist</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .home-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <h1 class="text-center">My Wishlist</h1>
+
+    <div class="mt-4">
+        <a href="/wishlist/new" class="btn btn-primary">New Wishlist Item</a>
+        <!-- Home button -->
+        <a href="/" class="btn btn-secondary home-button">Home</a>
+    </div>
+
+    <table class="table mt-4">
+        <thead>
+        <tr>
+            <th>ISBN</th>
+            <th>Title</th>
+            <th>Functions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="wishlistItem : ${wishlist}">
+            <td th:text="${wishlistItem.isbn}"></td>
+            <td th:text="${wishlistItem.title}"></td>
+            <td>
+                <a th:href="@{'/wishlist/edit/' + ${wishlistItem.isbn}}" class="btn btn-primary">Edit</a>
+                <a th:href="@{'/wishlist/delete/' + ${wishlistItem.isbn}}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
+
+
+

@@ -6,22 +6,17 @@
 			Modified by Terrence Galamison (2023)
 */
 
-// Specifies the package
 package com.bookclub.bookclub;
-// Imports classes related to Spring Boot
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
-// Annotation that marks the class as a Spring Boot Application
 @SpringBootApplication
-// Annotation that scans all components in the package; I could not get the links on the homepage to resolve without this annotation
-@ComponentScan(basePackages = {"com.bookclub.web"})
-// Main class
+@ComponentScan(basePackages = {"com.bookclub.web", "com.bookclub.bookclub.service", "com.bookclub.bookclub.service.impl"})
+
 public class BookclubApplication {
-	// Main method that launches the Spring Boot Application
 	public static void main(String[] args) {
 		SpringApplication.run(BookclubApplication.class, args);
 	}
-
 }
