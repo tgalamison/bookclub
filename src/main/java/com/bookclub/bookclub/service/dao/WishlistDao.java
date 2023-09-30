@@ -1,7 +1,10 @@
 package com.bookclub.bookclub.service.dao;
 
 import com.bookclub.bookclub.model.WishListItem;
-import com.bookclub.bookclub.service.GenericDao;
 
-public interface WishlistDao extends GenericDao<WishListItem, Long> {
+public interface WishlistDao extends GenericCrudDao<WishListItem, String> {
+
+    WishListItem findByIsbn(String isbn);
+
+    void deleteByIsbn(String isbn);
 }

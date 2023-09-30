@@ -10,9 +10,12 @@ package com.bookclub.bookclub.model;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.data.annotation.Id;  // Import statement for @Id
 
 public class WishListItem {
 
+    @Id
+    private String id;  // New id property with @Id annotation
 
     @NotNull(message = "ISBN is a required field.")
     @NotEmpty(message = "ISBN is a required field.")
@@ -29,6 +32,15 @@ public class WishListItem {
     public WishListItem(String isbn, String title) {
         this.isbn = isbn;
         this.title = title;
+    }
+
+    // Getter and setter methods for id
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     // Getter and setter methods for isbn
@@ -52,7 +64,8 @@ public class WishListItem {
     // Override the toString method
     @Override
     public String toString() {
-        return "WishlistItem{isbn=" + isbn + ", title=" + title + "}";
+        return "WishlistItem{id=" + id + ", isbn=" + isbn + ", title=" + title + "}";
     }
 }
+
 
