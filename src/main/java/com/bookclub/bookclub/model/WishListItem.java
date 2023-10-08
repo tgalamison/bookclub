@@ -8,9 +8,10 @@
 
 package com.bookclub.bookclub.model;
 
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import org.springframework.data.annotation.Id;  // Import statement for @Id
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 public class WishListItem {
 
@@ -27,21 +28,6 @@ public class WishListItem {
 
     // Default constructor
     public WishListItem() {}
-
-    // Constructor with parameters
-    public WishListItem(String isbn, String title) {
-        this.isbn = isbn;
-        this.title = title;
-    }
-
-    // Getter and setter methods for id
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     // Getter and setter methods for isbn
     public String getIsbn() {

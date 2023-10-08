@@ -45,21 +45,14 @@ public class Book {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
     public int getNumOfPages() {
         return numOfPages;
     }
-    public void setNumOfPages(int numOfPages) {
-        this.numOfPages = numOfPages;
-    }
+
     public List<String> getAuthors() {
         return authors;
     }
-    public void setAuthors(List<String> authors) {
-        this.authors = authors;
-    }
+
     // Override the toString method
     @Override
     public String toString() {

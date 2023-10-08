@@ -7,11 +7,11 @@
 */
 
 // Specifies the package
-package com.bookclub.web;
+package com.bookclub.bookclub.web;
 // Imports classes related to Spring Boot
 import com.bookclub.bookclub.model.Book;
 import com.bookclub.bookclub.service.impl.MemBookDao;
-import org.springframework.context.annotation.ComponentScan;
+//import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +24,7 @@ import java.util.List;
 @Controller
 // Map controller for URL path
 @RequestMapping("/")
-@ComponentScan(basePackages = {"com.bookclub.web"})
+//@ComponentScan(basePackages = {"com.bookclub.web"})
 // Controller class
 public class HomeController {
     // Handles GET request for home page

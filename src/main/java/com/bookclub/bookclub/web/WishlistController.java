@@ -1,7 +1,15 @@
-package com.bookclub.web;
+/*
+		Bro Code. (2020, November 10). Java Full Course for free [Video]. YouTube.
+		    https://www.youtube.com/watch?v=xk4_1vDrzzo&t=1234s
+
+		Walls, C. (2019). Spring In Action (5th ed.). Shelter Island, NY: Manning Publications.
+		    Modified by Terrence Galamison (2023)
+*/
+
+package com.bookclub.bookclub.web;
 
 import com.bookclub.bookclub.model.WishListItem;
-import com.bookclub.bookclub.service.dao.WishlistDao; // Import the interface
+import com.bookclub.bookclub.service.dao.WishlistDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,7 +17,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import jakarta.validation.Valid;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/wishlist")
