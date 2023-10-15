@@ -26,18 +26,19 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class WishlistRestController {
 
+    // Instantiate a new MongoWishlistDao object. Note: It's typically recommended to do such initialization in a constructor or a @PostConstruct method.
     WishlistDao wishlistDao = new MongoWishlistDao();
-
+    // Use Spring's dependency injection to assign a WishlistDao instance to the wishlistDao field.
     @Autowired
     private void setWishlistDao(WishlistDao wishlistDao) {
         this.wishlistDao = wishlistDao;
     }
-
+    // Define an endpoint for HTTP GET requests to "/api/wishlist". It retrieves and returns all wishlist items.
     @RequestMapping(method = RequestMethod.GET)
     public List<WishListItem> showWishlist() {
         return wishlistDao.list();
     }
-
+    // Define an endpoint for HTTP GET requests to "/api/wishlist/{id}". It retrieves and returns a wishlist item with a specific ID.
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public WishListItem findById(@PathVariable String id) {
         return wishlistDao.find(id);
