@@ -13,45 +13,49 @@ import javax.validation.constraints.NotNull;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-public class WishListItem {
-
+@Document(collection = "wishlist")
+public class WishListItem
+{
     @Id
-    private String id;  // New id property with @Id annotation
+    private String id;
 
-    @NotNull(message = "ISBN is a required field.")
+    @NotNull
     @NotEmpty(message = "ISBN is a required field.")
     private String isbn;
 
-    @NotNull(message = "Title is a required field.")
+    @NotNull
     @NotEmpty(message = "Title is a required field.")
     private String title;
 
-    // Default constructor
     public WishListItem() {}
 
-    // Getter and setter methods for isbn
-    public String getIsbn() {
-        return isbn;
+    public WishListItem(String isbn, String title) {
+        this.isbn = isbn;
+        this.title = title;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
 
-    // Getter and setter methods for title
-    public String getTitle() {
-        return title;
+    public String getIsbn() {
+        return isbn;
     }
 
     public void setTitle(String title) {
         this.title = title;
     }
 
-    // Override the toString method
+    public String getTitle() {
+        return title;
+    }
+
     @Override
     public String toString() {
-        return "WishlistItem{id=" + id + ", isbn=" + isbn + ", title=" + title + "}";
+        return String.format("WishlistItem{id=%s, isbn=%s, title=%s}", id, isbn, title);
     }
 }
-
-

@@ -41,6 +41,7 @@ public class MongoWishlistDao implements WishlistDao {
     // Lists all wishlist items.
     @Override
     public List<WishListItem> list() {
+
         return mongoTemplate.findAll(WishListItem.class);
     }
     // Placeholder for finding an item by key.
