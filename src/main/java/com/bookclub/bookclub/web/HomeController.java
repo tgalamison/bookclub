@@ -10,7 +10,7 @@
 package com.bookclub.bookclub.web;
 // Imports classes related to Spring Boot
 import com.bookclub.bookclub.model.Book;
-import com.bookclub.bookclub.service.impl.MemBookDao;
+import com.bookclub.bookclub.service.impl.RestBookDao;
 //import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,41 +20,57 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 
-// Annotation for Spring MVC controller
+// Controller class to handle web requests related to home page functionalities
 @Controller
-// Map controller for URL path
+// Base URL path for this controller
 @RequestMapping("/")
-//@ComponentScan(basePackages = {"com.bookclub.web"})
-// Controller class
-public class HomeController {
-    // Handles GET request for home page
+public class HomeController
+{
+    // Handle GET request for the root URL and displays the home page
     @RequestMapping(method = RequestMethod.GET)
     public String showHome(Model model) {
-        MemBookDao booksDao = new MemBookDao();
-        List<Book> books = booksDao.list();
+        // DAO (Data Access Object) to fetch book data
+        RestBookDao bookDao = new RestBookDao();
+
+        // Fetch the list of books
+        List<Book> books = bookDao.list();
+
+        // Add the list of books to the model to be used in the view
         model.addAttribute("books", books);
+
+        // Return the view name to be rendered
         return "index";
     }
 
-    // Handles GET request for the /about path
-    @RequestMapping(method = RequestMethod.GET, path = "/about")
-    public String showAboutUs(Model model) {
+    // Handle GET request for a specific book by its ID
+    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
+    public String getMonthlyBook(@PathVariable("id") String id, Model model) {
+        // DAO (Data Access Object) to fetch book data
+        RestBookDao bookDao = new RestBookDao();
 
+        // Fetch a specific book by its ID
+        Book book = bookDao.find(id);
+
+        // Add the fetched book to the model to be used in the view
+        model.addAttribute("book", book);
+
+        // Return the view name to be rendered
+        return "monthly-books/view";
+    }
+
+    // Handle GET request for the about page
+    @RequestMapping(method = RequestMethod.GET, path = "/about")
+    public String showAboutUs()
+    {
+        // Return the view name for the about page
         return "about";
     }
 
-    // Handles GET request for the /contact path
+    // Handle GET request for the contact page
     @RequestMapping(method = RequestMethod.GET, path = "/contact")
-    public String showContactUs(Model model) {
-
+    public String showContactUs()
+    {
+        // Return the view name for the contact page
         return "contact";
-    }
-    @RequestMapping(method = RequestMethod.GET, path = "/book/{isbn}")
-    public String getMonthlyBook(@PathVariable String isbn, Model model) {
-        MemBookDao booksDao = new MemBookDao();
-
-        Book book = booksDao.find(isbn);
-        model.addAttribute("book", book);
-        return "monthly-books/view";
     }
 }

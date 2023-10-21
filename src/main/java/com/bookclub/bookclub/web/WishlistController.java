@@ -10,6 +10,7 @@ package com.bookclub.bookclub.web;
 
 import com.bookclub.bookclub.model.WishListItem;
 import com.bookclub.bookclub.service.dao.WishlistDao;
+import com.bookclub.bookclub.service.impl.MongoWishlistDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,56 +21,52 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
 
+// Controller class to manage wishlist-related requests
 @Controller
 @RequestMapping("/wishlist")
 public class WishlistController {
 
+    // Initialize an instance of the WishlistDao with the MongoDB implementation
+    WishlistDao wishlistDao = new MongoWishlistDao();
+
+    // Autowired setter method to inject a WishlistDao instance into the controller
     @Autowired
-    private WishlistDao wishlistDao; // Use the interface type
+    private void setWishlistDao(WishlistDao wishlistDao) {
+        this.wishlistDao = wishlistDao;
+    }
 
+    // Endpoint to display the wishlist page
     @RequestMapping(method = RequestMethod.GET)
-    public String showWishlist(Model model) {
-        model.addAttribute("wishlist", wishlistDao.list());
-        return "wishlist/list";
+    public String showWishlist() {
+        return "wishlist/list"; // Return the "wishlist/list" view
     }
 
-    @RequestMapping(path = "/new", method = RequestMethod.GET)
+    // Endpoint to display the form for adding a new item to the wishlist
+    @RequestMapping(method = RequestMethod.GET, path = "/new")
     public String wishlistForm(Model model) {
+        // Add an empty WishListItem object to the model to be filled in the form
         model.addAttribute("wishlistItem", new WishListItem());
-        return "wishlist/new";
+        return "wishlist/new"; // Return the "wishlist/new" view
     }
 
+    // Endpoint to process the form submission for adding a new wishlist item
     @RequestMapping(method = RequestMethod.POST)
-    public String addWishlistItem(@Valid WishListItem wishlistItem, BindingResult bindingResult) {
+    public String addWishlistItem(
+            @Valid WishListItem wishlistItem, // Validate the submitted wishlist item
+            BindingResult bindingResult) { // Result of the validation process
+
+        // Print the submitted wishlist item for debugging purposes
+        System.out.println(wishlistItem.toString());
+
+        // If there are validation errors, return to the form view
         if (bindingResult.hasErrors()) {
             return "wishlist/new";
         }
+
+        // If there are no errors, add the wishlist item to the database
         wishlistDao.add(wishlistItem);
-        return "redirect:/wishlist";
-    }
 
-    @RequestMapping(path = "/edit/{isbn}", method = RequestMethod.GET)
-    public String showEditForm(@PathVariable String isbn, Model model) {
-        WishListItem item = wishlistDao.findByIsbn(isbn);
-        if (item != null) {
-            model.addAttribute("wishlistItem", item);
-            return "wishlist/edit";
-        }
-        return "redirect:/wishlist";
-    }
-
-    @RequestMapping(path = "/edit/{isbn}", method = RequestMethod.POST)
-    public String updateWishlistItem(@PathVariable String isbn, @Valid WishListItem wishlistItem, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "wishlist/edit";
-        }
-        wishlistDao.update(wishlistItem);
-        return "redirect:/wishlist";
-    }
-
-    @RequestMapping(path = "/delete/{isbn}", method = RequestMethod.GET)
-    public String deleteWishlistItem(@PathVariable String isbn) {
-        wishlistDao.deleteByIsbn(isbn);
+        // Redirect the user to the main wishlist page after adding the item
         return "redirect:/wishlist";
     }
 }

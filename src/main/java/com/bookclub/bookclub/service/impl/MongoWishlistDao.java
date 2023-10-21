@@ -12,53 +12,56 @@ import com.bookclub.bookclub.model.WishListItem;
 import com.bookclub.bookclub.service.dao.WishlistDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-// Data access object in Spring.
+
+// Repository class to manage operations related to Wishlist in MongoDB
 @Repository("wishlistDao")
 public class MongoWishlistDao implements WishlistDao {
-    // Autowires the MongoTemplate utility for MongoDB operations.
+
+    // Autowired MongoDB template to facilitate database operations
     @Autowired
     private MongoTemplate mongoTemplate;
-    // Adds a new wishlist item.
+
+    // Adds a wishlist item to the MongoDB database
     @Override
     public void add(WishListItem entity) {
         mongoTemplate.save(entity);
     }
-    // Updates an existing wishlist item.
+
+    // Updates a wishlist item in the MongoDB database
     @Override
     public void update(WishListItem entity) {
-        // This will also be implemented using mongoTemplate.save() since it can upsert.
-        mongoTemplate.save(entity);
+
     }
-    // Removes an existing wishlist item.
+
+    // Removes a specific wishlist item from the MongoDB database based on its ID
     @Override
     public boolean remove(WishListItem entity) {
-        mongoTemplate.remove(entity);
-        return true;  // For simplicity, we're always returning true here.
+        // Create a query to match wishlist items by ID
+        Query query = new Query();
+
+        query.addCriteria(Criteria.where("id").is(entity.getId()));
+
+        // Remove the matched wishlist item from the database
+        mongoTemplate.remove(query, WishListItem.class);
+
+        return true;
     }
-    // Lists all wishlist items.
+
+    // Fetches and returns all wishlist items from the MongoDB database
     @Override
     public List<WishListItem> list() {
-
         return mongoTemplate.findAll(WishListItem.class);
     }
-    // Placeholder for finding an item by key.
+
+    // Fetches and returns a specific wishlist item from the MongoDB database based on its key (ID)
     @Override
     public WishListItem find(String key) {
-        // This method will be implemented later as it requires querying by the ISBN.
-        return null;
-    }
-    // Placeholder for finding an item by ISBN.
-    @Override
-    public WishListItem findByIsbn(String isbn) {
-        return null;
-    }
-    // Method to delete a wishlist item.
-    @Override
-    public void deleteByIsbn(String isbn) {
-
+        return mongoTemplate.findById(key, WishListItem.class);
     }
 }
 
