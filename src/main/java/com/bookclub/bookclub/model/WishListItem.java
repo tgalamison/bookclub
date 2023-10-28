@@ -16,46 +16,56 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "wishlist")
 public class WishListItem
 {
+    // The unique identifier for a wishlist item.
     @Id
     private String id;
-
+    // The ISBN of a book/item that cannot be null.
     @NotNull
     @NotEmpty(message = "ISBN is a required field.")
     private String isbn;
-
+    // Title of the book that cannot be null.
     @NotNull
     @NotEmpty(message = "Title is a required field.")
     private String title;
-
+    // The user to whom this wishlist belongs.
+    private String username;
+    // Default constructor.
     public WishListItem() {}
-
-    public WishListItem(String isbn, String title) {
+    // Parameterized constructor to initialize a wishlist item.
+    public WishListItem(String isbn, String title, String username) {
         this.isbn = isbn;
         this.title = title;
+        this.username = username;
     }
+    // Setter for the ID.
+    public void setId(String id) { this.id = id; }
 
     public String getId() {
         return id;
     }
-
+    // Setter for the ISBN.
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
-
+    // Getter for the ISBN.
     public String getIsbn() {
         return isbn;
     }
-
+    // Setter for the title.
     public void setTitle(String title) {
         this.title = title;
     }
-
+    // Getter for the title.
     public String getTitle() {
         return title;
     }
-
+    // Setter for the username.
+    public void setUsername(String username) { this.username = username; }
+    // Getter for the username.
+    public String getUsername() { return username; }
+    // Override the default toString method to return the wishlist item.
     @Override
     public String toString() {
-        return String.format("WishlistItem{id=%s, isbn=%s, title=%s}", id, isbn, title);
+        return String.format("WishlistItem{id=%s, isbn=%s, title=%s, username=%s}", id, isbn, title, username);
     }
 }

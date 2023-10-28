@@ -12,9 +12,9 @@
 package com.bookclub.bookclub.web;
 
 import com.bookclub.bookclub.model.WishListItem;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import com.bookclub.bookclub.model.WishListItem;
 import com.bookclub.bookclub.service.dao.WishlistDao;
 import com.bookclub.bookclub.service.impl.MongoWishlistDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +38,10 @@ public class WishlistRestController {
 
     // API endpoint to retrieve the list of all wishlist items
     @RequestMapping(method = RequestMethod.GET)
-    public List<WishListItem> showWishlist() {
-        return wishlistDao.list(); // Return the list of wishlist items from the database
+    public List<WishListItem> showWishlist(Authentication authentication) {
+        String username = authentication.getName();
+
+        return wishlistDao.list(username); // Return the list of wishlist items from the database
     }
 
     // API endpoint to retrieve a specific wishlist item by its ID

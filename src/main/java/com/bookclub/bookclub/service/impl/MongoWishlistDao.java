@@ -35,16 +35,25 @@ public class MongoWishlistDao implements WishlistDao {
     // Updates a wishlist item in the MongoDB database
     @Override
     public void update(WishListItem entity) {
+        WishListItem wishListItem = mongoTemplate.findById(entity.getId(), WishListItem.class);
+
+        if (wishListItem != null) {
+            wishListItem.setIsbn(entity.getIsbn());
+            wishListItem.setIsbn(entity.getTitle());
+            wishListItem.setUsername(entity.getUsername());
+
+            mongoTemplate.save(wishListItem);
+        }
 
     }
 
     // Removes a specific wishlist item from the MongoDB database based on its ID
     @Override
-    public boolean remove(WishListItem entity) {
+    public boolean remove(String key) {
         // Create a query to match wishlist items by ID
         Query query = new Query();
 
-        query.addCriteria(Criteria.where("id").is(entity.getId()));
+        query.addCriteria(Criteria.where("id").is(key));
 
         // Remove the matched wishlist item from the database
         mongoTemplate.remove(query, WishListItem.class);
@@ -54,8 +63,12 @@ public class MongoWishlistDao implements WishlistDao {
 
     // Fetches and returns all wishlist items from the MongoDB database
     @Override
-    public List<WishListItem> list() {
-        return mongoTemplate.findAll(WishListItem.class);
+    public List<WishListItem> list(String username) {
+        Query query = new Query();
+
+        query.addCriteria(Criteria.where("username").is(username));
+
+        return mongoTemplate.find(query, WishListItem.class);
     }
 
     // Fetches and returns a specific wishlist item from the MongoDB database based on its key (ID)
