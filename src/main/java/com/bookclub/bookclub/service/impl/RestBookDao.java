@@ -30,12 +30,11 @@ public class RestBookDao implements BookDao {
 
     // Fetches a list of books based on a predefined set of ISBN numbers
     @Override
-    public List<Book> list() {
+    public List<Book> list(String key) {
+        Object doc = getBooksDoc(key);
+
         // Predefined set of ISBN numbers
         String isbnString = "ISBN:9780593099322,9780261102361,9780261102378,9780590302715,9780316769532";
-
-        // Get book details from the API based on ISBN numbers
-        Object doc = getBooksDoc(isbnString);
 
         // Create an empty list to hold Book objects
         List<Book> books = new ArrayList<Book>();

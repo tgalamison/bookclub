@@ -19,12 +19,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+// Annotation to mark this class as a configuration component in Spring.
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        // Creating a password encoder using Spring security's delegating password encoder.
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
         auth
@@ -33,17 +35,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .withUser("terryg").password(encoder.encode("1234qwer")).roles("USER", "ADMIN");
     }
-
+    // Overriding the configure method from WebSecurityConfigurerAdapter for HTTP security setup.
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+                .antMatchers("/monthly-books/list", "/monthly-books/new", "/monthly-books").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
+                // Configures the form login with a custom login page.
                 .formLogin()
                 .loginPage("/login")
                 .permitAll()
                 .and()
+                // Sets logout process.
                 .logout()
                 .logoutSuccessUrl("/login?logout=true")
                 .invalidateHttpSession(true)
