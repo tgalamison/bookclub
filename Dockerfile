@@ -1,5 +1,6 @@
-FROM maven:3.6.3-jdk-11
+FROM maven:3.6.3-eclispe-temurin-11-alpine AS build
 VOLUME /tmp
-COPY target/*.jar app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+COPY . .
+RUN mvn clean package -DskipTests
+ENTRYPOINT ["java","-jar","bookclub.jar"]
 EXPOSE 8080
