@@ -33,7 +33,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .inMemoryAuthentication()
                 .withUser("user").password(encoder.encode("password")).roles("USER")
                 .and()
-                .withUser("terryg").password(encoder.encode("1234qwer")).roles("USER", "ADMIN");
+                .withUser("testuser01").password(encoder.encode("password01")).roles("USER", "ADMIN");
+
     }
     // Overriding the configure method from WebSecurityConfigurerAdapter for HTTP security setup.
     @Override
