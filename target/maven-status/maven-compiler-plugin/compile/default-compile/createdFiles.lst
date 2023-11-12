@@ -1,0 +1,11 @@
+com\bookclub\bookclub\service\GenericDao.class
+com\bookclub\bookclub\service\impl\MongoWishlistDao.class
+com\bookclub\bookclub\model\WishListItem.class
+com\bookclub\bookclub\web\WishlistController.class
+com\bookclub\bookclub\BookclubApplication.class
+com\bookclub\bookclub\model\Book.class
+com\bookclub\bookclub\security\SecurityConfig.class
+com\bookclub\bookclub\web\HomeController.class
+com\bookclub\bookclub\service\dao\BookDao.class
+com\bookclub\bookclub\service\dao\WishlistDao.class
+com\bookclub\bookclub\security\SecurityController.class
